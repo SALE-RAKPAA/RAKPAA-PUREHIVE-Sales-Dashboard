@@ -1,0 +1,406 @@
+﻿<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAKPAA & PUREHIVE — Sales Dashboard</title>
+<link rel="stylesheet" href="dashboard.css">
+<!-- Chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<!-- Flatpickr date picker -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/l10n/th.min.js"></script>
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- ── Top Bar ── -->
+  <header class="top-bar">
+    <div class="logo">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAb8AAAG/CAMAAAD/zSlAAAAAclBMVEX///8jHyAAAAAgHB2amJkcFxrOzs4WEBI6Nzjq6usdGRr5+fkEAACJiIgYExTz8/PU1NQLAARxb3Di4eGSkZFhYGHAvr8RCgxJSUl4d3fa2trHx8cyLzAqJyivrq5ZV1iko6OBf4BCP0BST1C3trdpaGjJdl2VAAAfFklEQVR4nO2dfYOyKhPGV6hQNKzMKN9Sq+//FR+1RFAw23tPm8/O749z76l8vWSYGQb8+gIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAubCJ/d8+BeD7HCzvBALOllXKMDq5v3Nwf3M4HbcoDRcH55dOYeYEIbcsjLLfOLaT3TDy0uPFpggd1ytQ8HWKSj7LYknw/kMfQoRui00UBNHmsC5RWvzCScycA8K1fhbfvfvh99cE3TbdUf0sRfbqzScxdxyLNfJZmOdvPvINlbH6kb/3fseOz5e1Zz1gx+idB/Zv6Da0lhmj13eexdzZJLTVz/LW7zzyHoWO5uOMsrc+RvPGXRMhn4W3b/QeDo3DFCTHGtsuj+fs3hPm6PK+s5g7K6n5WRY6ve3AzhnVzczNLITQbhWfOELJ3Xc5ofxtpzFz3DWS5LMwe1sDvD6eFfdU6bev/lhU/16awwf8qDOswJDAZrJ+lrd/04HdkG6aP/xWv+BS/XH3PXcIXJhp5Erzsyz6ric/QLd7wlXo5+/qP5oucIMgGzuNkqj64fTwngNnbZin6nfXzbcvkIaZQtBrflUMuH5PEib0Hg+K0M8Jqz8W9w8LDFmYKSwG+hFtTPbz2Pa9++v0izFC6SMds4cOcBI33tePpu958mlrIRv9qmYX1e5L8Wj8OSTRphAcaV8/C72nAySKfixNkfA+v0C/IVEeDTu2VYKH+mk6QOdw/eleMW1zrY1+p0NZ/ZcL070A+6lSOXfJemAZD+lQP37ru+5OdlmizQ+f0MV6dHWP/i+r21/Rfrv2YtOGf5PoSOjW7jetfCifRY49/eKQcYx+Oq5fty2s9V9I9U/6sKluaEMKW+FgVVItPVt9rBfD7s9itqKfs+Os2pSff/iENq2dbvVrGuBj/MNBtz+dQHOjrFgf5FuQbe/isIX0qTL20Oknb7c6osenctPd5MU+/rc77CSPTE+rn1/7n+XdTGdtHPhHWaTIQ+jc9Vnu/hHoUXnI1C0G4UP1C6kMxs3Sxy8o7j518rqpoN2/mbg2xBPxX9MA77rZbwpiPpQcNUnp7VEI6BZikB2dhRJP29/CEgaWi335Bak/xfzfclwrnDb/OudH2qzJXzfpuwy9vRLnk4jKx5gCaf2Byjh1LU2670/6vz3vvkdtz+me+MPr+bdROre4Z82spjGf/dobrmOIoxsc0Z9ufhlt3UqWtE76RWppXLTAfDnUj1xa/XIkuaetfu5NpNx431N9jaq9VRbUjRuaIjR/Vf21cnY/7uzOi73U1h71XYp+lii11sZ/od9+qYzMP3ZUdBlT1dN5nRgluijvhMJ/2u3sWUhDsuQeMaj64W1+/+XG1uRf7kNwX8FRGdm96+efpA/Zv7W/up9LBmmyYCd10H+TWG5VJK0dD1U/i5J7yxnLf+7VoYlGP/dEZJP6z15GhvoDtfER/fmhv8ojl248Y5UgfqhGCm2p9W4QQCyTu6MZe2rTrF0KN5R3TOm/50iiyvksNn5zMq4fHErE3lrC+JkEF1kWVh5qZ09RAz96nn75RDf+d96qG5Co91zQNP8BJ9/Jj4ic1/n1kC1OJcK7Nw3/fzbVYy1LUonVF4rceznHNP7e/4Kmjq9E+1Uf+jMxWpCdbHTnsoZZpHeio9x8SBpdiWoO2+G3Qf2Ldc+K9PVmx69C3gX+wQyXG6xW+f662sD0P4FzlhsLtfal6qngxwBN1tfp0txDP+zpyneq8WT5b17dHyBSOjCcpqoelpc3PwvKXv3n4vFxzzHFiSzoz/R9wBjBUW4wgziPP0pN1DAB47v3Eg8G5uX//7G+DxghumwtM+0w+0YpwG5HwK9DwaXWh0C+dxCcNcNDQr9HmszdS4aRthUouWZgooWlUFv0HoLzIDzoVGgL5QO76+p461QuzMqzBEqL3kVw9IwyiIkOi27+rcg8mvVj1o+XogFGgpupBXb6OSKuewT1XyP6USjseytBaFBCDBN9OUuhn4jJc6bfimHo+96Lv9O3wK7MU6dfpvc/oe97P46+BXKxXJZOP93Abh22Q9/3foJQ1wK36zH9Is3ALvR9v4QznGVkWZ7QQqefcxxWxjACfd/v4A+9UMxEiZdOP38oOfR9/zXmvskZCMhKMXiu069fPVGX9Y7IB73iv+Mv1pmxHmyQieE7MVKq1e/aH78d6ftWixPMNvlnNojQ5GYqfHVuajKbdVJp9XNV/ZhRPidLq29vP3cdf5V6JBZv0fGgL0FQnRiM8+6b5/qZ+j53U1gIY4vBglf/zKPigaPwoO2OVCeGdoMIOv0CZfzd1PcFew81yW9aQg/4r4iKFZ6etBWUgWJCu1EgjX6OUldIuTZsd7PL9jF0Afp9myB62Muu4ojyUluF56jlm22h7lA/P+RS+M48bdznn4hIkgr9As0ke8CIe7gwgsPG+5Mrxpi31/WCzk6piWF3XQb6+UrlBbO1D8MmkX5018/PbbJM1n965uxrLLacYoqs2uvM1cZV6AT0lRb4MKF9/dR8G+mvcHznkCgWttavCjIJxuzPT1+YTozvFqyusO5VbGL9CnDBTR7QZc30kZ5+geKoskQbkRzUZQvp0e1yBF4BNnQaoiST2JuvQy/i1k+iUxsXI4e+fv5FLtMl+tV8okRNr5Fz5d62Twa1f3qtkf9T/K52k6FDfyk6THLdRu56q5RRZ5J+VVAfpGoD1SZWfNIrb/LWTii2w0vIc0/ClWpvKc2TXsmtwfS5O1lAml4dq9MvUOvu9X2fW/QLE71i18mOMSS6pyHXB1JrUHK71c/P8wt5XjRL1t1Y7U6pOGS2fhGkw2BwHks1bO9bQnT25KMV1pVx1N9/ZyfP7aNys5X/5oZVBPzdsC5YPjiBxasn4t6M5YH3O1katiu22vIWdWOTG3KgoxtTCkuXTSXYGerEHiBDKOafngrI9H2frvdT5YMKtRcYDswq8IVhO/eExgUk2qUhmkOmmkVHOtmhuP4lHG1xkribO9N8VmfchDJkHJGNxw5ILZDvNfzLSB9IS2Muyz+NbEdScx9WjOhHGYQOr+IM15AQjLny/tpoQkk5sn7V0Tw1iVkg3+sEN7NDwUbMmRrIS3BD3HennyaQDgZ937cY6QMfs6QN2xWeTkC2HMtfBsaZnQz6vm/iGPvA8dcZOTvNdgyPxm8rbtCPYUi7fBddSqRhOz6W4w77QGPY/iA2PCpcn22tT25zzbLsEMCokpnA4MQ80a8SvtecyPHJ0puG8MEwSl/XF+7sLUKIHofL3wMCwzQxbgwA2+2UZHbVip5V4vaHGdtWa5BvcyP3RWAxQzZ4p2bcnS4c4E/fw+acJNPL06e1D1r9mClejCyCLeYhD1XtHCZ/jqGu7fjgmf2st+uWe11OWLpRZz/va1RqiGxSxfSXPF4dTgmrPFRwccw4mtXkJ+injr8/ZTX0X4x9n3/iFrUXjQlw4zOz+AWcGDPq+o4NU14I/qJ+g/hB6fs213xxbVtjnFKpzjuyqWUYkQQa3IETM2WVQO38ByNRf/SPSTm66JxayyVOLo2r6VZdK5ceoAxZ3vvebz1HBn0gz59v9Jp+fqrmzxjt+r6M3xsnJk3x2wphWsqve0HYNKIM3FHXWBWreY7ymn5f6oKFcq40o+IrzBfuV+j1XhFx5jSB2opRHHV4By9e8V+m6Bco+Wu57wssSVmabnyEMVLCl0q/FPQbp7fGuJU/3eIl/YKL3PyW8vjUWnly0Lrq7pDa3aWUwUSlZ3Tvt2kEfO7BvKJfpK6MLr8l2kmUugqc2hRTJWUWIYv/8VdzTKG3zvjTxTpf0C8q5ehPHSeM+vXfVFqjqyHkFrzWdgJqH1iZ0HEBp+sXKONUTJ1luBomZrjS++YYM+j+puAqVWnMykd/PVk/VT7Sq80Y6oeVStCsCjzGhyOBFlcZVXjSB07VLzrKdpnbveGgYDAESc6itfmxvaXW9m+/FfUF/IIps4zGTOhE/SKl9fGyP9DkDgqb2tyLs1qcUfXl9gwTy6biK30gZiMCTtMvUFofuQyl6L/yo0ke+MFhEeItqUtKbzAxdzq9lxVZufGXk/Trtz5NS3LK3iuTyviw2F2SbR3PMJTmYDxfQZ2oST2jNlP0W9mycRwaz8ePemMTlHB23zm9GJYVAoy4e3lqmLkPnKDfSjWetsEQrkJsKA6lJbyZaiKuEzU49euJZSdGv6bIFP02qeJ5nqMvJ2iOEfRMop+VpupCtIPe7yn+Ji9u52PNJdyts5OSiWFrbQt8qt9GaX24XORFeD/IOTztr9JTsVk/1u3tmiHmCHms/vdPvxN8Av6hKC3GGVsyxuiSEd6bUo15odvumX6b3jvm0rQ+CGUNhLAkzO/d4fWGCa6idrZFSfu6LM7D/Ho913pC7mwEf1UsEWIG69WCdC3wiX6VVzK+07qFXa7Bwa5rzCi3ytti81hagfJmZdC8seMs+a9vwmzxrzuOjPNKJLz1sA8c12/zTL4GjmxetVLiJbusXgItaJ4kmjb5skV1aqzSk0Pxixb3GlqmWQn9tkKHLXBUv1U5RT7r0eOd8839+WiqRDFr8td5ZVS9895TamEAQbCjE9WrbzMZ3MQx/dSc59Odi/R0M5bLm1ch51UUg0pnlVJ2Bg9mgF8g7SwwI+jUu4sj+sXpK/JV+27L7+v1YJp3XLt7hJtxQCcktJ/yBuqivJfUs+o3d6h9oFm/ycaz2/d9yCGqlwQi9ejtojINvE58ro5LTMEDHbAYXYBCB6ZqIG/Ub5rrosCOTZTevP6qrh3Oq6cL1ZoGdRBizuH9XZxkdDkWrYCqI2HSbzMy092053uM5xa1fmjRBA6oLgF1mne5clhZcsjoW1JNt1muCzPot0pe3i99lHtGx1q/7TpDjxqYqNxaGFcWFYYghkSvC1gF8p0J1esXv9z3WSzN79tmuN4jTtNavsqgbs7EWiYpZhPmN/1Bxl5zawCz/fj7V4IXPU9LerdjPZubknohSatZTDm4oHptipAx/bjTn8c5TUq+qAKKPlCn3+qluK9hK+ZwbhjGZbMyGzv6d9eFeoevEwQQJtwFHl/ITiOg6AM1+h2Sl12X7t3HX6et5e2DOgNKzllQpwBwPXGzILAyqJHV2XvaBBlbyrFi2wcO9btaRNlsQlskF2GPq5iBWs5XtqwFRGhb/7NwHH/PMIUZ8CaC9ZPbjL1kkRN5RJ7dBRzoFyvy8TAL0XhzpNSidtv5ZXW+bF+/ngU3436NK3MJd6cLnjSd7a/ixiEyG1GKULFxq7ahCNik0vr6HRJ5N7yyi05ejuwaI9smlfdyWgVOcL1ZlXz3FXg3RYr4vQSAEVI/OlOmk/5d3EPJiM6KUkaS4t495WpNTD2dpKef+moHXjZt1L8eMdONLmJG0sJxcNXHcZLYKSdVK7u0bqYfh3ZKCakHlCnG/QkRQJ/rqaw6HFkiSrxtcuve7Jgpa1yjm9PT78BlW4nO4obH6wtFXCkLpgTh86J+MDbnLauH3nE991at84wOebELL3aSVpsjCODH8Tf56Zjyym0ghG8RwvalyFbSU+9mTFmk/OQr6xeonicLZSmC6z4s0229b1bvm9rn/fUhSLA4ErTdeghfhnWeru87m/hwXYSwAsxz/CDO96fbsQx3+zzbDNYdU/tAfnKw0C+PFfm8Qb7EieJ8Uewu1b7X+TWSlQqy9W53WlzHUiyVij9zjf//uDX6rzJvKQt4ScX/HOX3OFjbi8HamfZtOiDws+TKGhLyrHXFtJrkA34ZNzfVSUuQEJLNH0v+NGHqwWv8Ppl8Oy6gdwbj+dHko6/hIDa4Ih9ORo0tEMNE58/HNVeucZgrNAcWBicGQZnKPMhSjYAY1kiaDddkMCyEvR20vtkQ834LJCeQb0ZkSA0j0AVG6GZFnDLFeP72+QAvcrC7Fshu0Ppmx5V08kHfNz9eXP8a+DBAv3kD+s0b0G/egH7zBvSbN6DfvAH95g3oN29Av3kD+s0b0G/egH7zBvSbN6DfvAH95g3oN29Av3kD+s0b0G/egH7zBvSbN6DfvAH95g3oN29Av3kD+s0b0G/egH7zBvSbN6DfvAH95g3oN29Av3kD+s0b0G/egH7zBvSbN6DfvAH95g3oN29Av3kD+s0b0G/egH7zBvSbN6DfvAH95g3oN29Av3kD+s0b0G8qrpapW8frdWZaHv7ZPse+NOunP9/JZ52t19dJVybOZL3ef+4K6k6+1pLn2WrCWfs7hNKN/ru4t8tF7/bGhfRl/xXeRv0c/fne2edZPH7WLkeIP78uiQVC6HNfMB7ZyNOBEEnCxdM3tm1KaqFc/91e3TNKeu20kL5Ht97GRv02SH/Cj7PmyXk/dtYHZFnolfeFu5elxftn9zlEpSe9bIjxGsKae0cZwfsnJmnhVRuV+h/tEZHe5Ue3dk+/dfumOEwZ6r9ixahfhIh0woS3EHb/uDprq9/SO9zd1rK2p/GLUjik1Ymg6IUt3kplP4/ifpDdvuZ0Th5vz8DoNtoEnXP9Q3TQfhnvT5YQEF/Wi55+19ul/hqT9HLb9Z2UEftZlN1jUexbipvNHu9socj4trJNrQZOpsvhF/WbfFAxeYP3Ex3blw21hsWNQ6/9aPSNz4fmLntG87JAbcM+6jrJ+siUhQfN3R7zPw9J23BTecvNvn3sqrM2+FR7Xn/N9yPX1DvFsr45uG/7Pwm/tin3yxYNybm1d54XIya0aLbExPi4t3sh2rdnrkqKud65G9MvaC0GtpRt3YPdmhK01p7P3V4YzkZLdr8C/JrP+lZ0+lVXylsTana+An6/yVvT8zyuX5QwzA191bh+raG0enuNHydUdanaG35N7z17orf4Q/zwfhvY6XMboFa/r7g1UmxpbID7hzzM9F72Uf0iTCr5DLv+TvuryIXZ0J2Sf/JaozJRjvjuylWKr6Zt8Avo9fNPTPOpStcPGczLmH4xZtScW5nU/ob6+SVrv9KcdYDbZzKd+C7rU3sB6HOzQHr9vvL2DXyGvqS2VlZ7jw2d5Ih+B5tRnBub9jf1kxrgerhv4U4ZY9YernibOTGZmN/HoN8qxe2pG4zNSejHbL1HbtZvlRDsmeX7rv38iraP7Vg5vOGleKkgORqPLJMJwfFyapf5dgz6+a0zR239o7exu0Da4OQY9YsRo6N35LvtzwnbhwoNTORBqDExB+Oeu9e4moOk38ag31cpejd9Z7HgXRxtaKMm/a5V2GeNJhUntb+B/1nH2+JiBgrtPHG+0yLyOO2uEKNPNaDf1K960tMiaf11on2eDfplKaPJeE74u+3PXYv21/epopScb60cNJkgx5rgnWiCaHrQ/16e6pdo9YsTfgnaKNHSvyNar981ZctnKf0f0K+/Xc74etU+cBbLx0/gq04PkSTet30mO04eVHsvBv2i9lKpxhOoblSBqjuUt5taSHd1Wv2uiNL0WTj1Xf9F0i/v7TGs1Pg6tSfMnudgMs53kg3lH5qDMeh3aJPP/KaTxrGWVY+wKanhdjVo9HNzioe2bbj7b+VfxuznISEXv/NhaPLMg/FvvLohfnswi5w+swEa9NuPG/4c1SbTFVE+CTUezFA/N8fLKeHXd9uf5L+oTdxde159Iax94PizsbGNxYjbJZkqP9wwUP3L6PULuo5b2/1dOKsf8Kx93LHueR7qt2hSINR6lv/4dvxwFkNf6iGChDWfiIwKK5+cwxqheqAwQC90mb+BXr+F8Ey0gU+MyKW+ea4Y4uOaNM1Av8XjZvDdk4f/3+P3o/pdZS+aC4nEoPIzI47otslK3Nqwg08ftngnWv0OIlWotxoFf/h33fN8HOZgevr5e6+9ecv/yP8U+bOtmj9zL9xrrq7q1Vo5zqPPUIb4rekSrq1+2Hql8OJt6PS7Jg/rSan2Rgc2e2TkV60kmA1/qernr7uIn1zGrdc3/RfHbvPXqZrdWSH2GIPN24AAk9Fh+Bsn9wtyEtGTvFJ48TYk/TKnJrjurFY+rs9RZpTv7rfDFSFg+4mEql/BMBMJKV1+WeKb+ReRoe7but22jQejUsgxloPZpKR86Cs8GKwNkn6bTj+cJjUWf/QRlBvGjpwbFwZQWCzMBs+zot/Jw7wUamM06s19z37GtDUGS7VzcywRcrqFOAU8cgJrvm079DgdDZJ+m04/izLGKBVG7mgqXI1TJvJPQXd1g+e50+8WFAh7Zz+w23CK22MP87f8l2tiinkWnIgR9EMXkefG4wdHIiyws2tNLrl8YANU2l+adDVjVm7Ywl2jrciXdREXJf2rE/rR441hEkZf7kIIMzokOq39KZnZ1b6VD3u9YNS5ESwuxhGRERta/JarPOInhkIx/0APptPPy6MoEv27xW6G5uckVIqOr6nRI99I42eW15SyiQDNomNlfJP0s6y1qB9c72z+aJbLQf1gZS/K7mBSRG5K4/kn7nXHjcRIGf9AD6bnf7qinBCbIqQMESmZ20X6g0zbRh5xC++NRfRRo0VBk+zn3eDfIeQuKmZe2q80rRSTb3zQDcObTEBkUTn+37VdJn0W9P8C/fghFpfHL/oGeOHbvJtH8iVS9Liflpba3zZsPxQ+ItbHJg0T2x/fqngkvQw77crlZLF0whfRnx0NciwQO0sbxKKHobnxlH+Lvn5dRICJ9gZvEKanhbBci5voMfs5GKEfxidxV327vX3cdPsm+y+n/hyZXDd/JWM4XUsnLEw4pnr/2rcZO3cb7NfCKSCmPuX3GMTvBybO1tZtUFSqcNQhOsxBlY/Qj8nh+lXs3zOVRk33XybMH3NDXrk00gl3VRFbfR6vNkFM2qAbuKfWxyWxB/o5t25UT9MAHZtS1W6JtAq21B5TP37rrkVGyhgEfnf8SEfV31HVzIonDntaC3DjFlG3ED3u5w3DD/Nn3ZilroorW9KyUM2W+P1WdUkM9RPdjAvT3KVv56917BC7qOfbTazRyhFVnuxO3aI7Y0M11+8x1K+r3dWMmfg7wvoX3dY1W5QqMYGpfikTPSYzeIDfzV/rrs9m/Wp6JxRBjC6LsOeP1LV0xt2wxadN5tTkrw/CXLDB/KNVwtJ+FHsweOQm/VwxJkNLvQX9wfaXkWGyfNHlYYceTBXgD9zMLmvKzxOO+U504w/HLknff9zyyhr1d+F0HrliEI31n92gqKcv3f659ufeiDfIla/GIvJDFe33n6quzzaMZ/8eOv1WXeF479kNSja0IO5CeARKxttcf52LmUL6sqCf0y9OWTpoY5WorQEYjG/6xVYj6rUbqP6wyZza8dtT97ipnV1WuWLDtEn3PCuFhGb9fDHBkKS6LMx363eH7Dnpd2ZfcmX8YApUlNKt1qg+Nliao9ZfQavfqh1/tyhTrj7kg7nqX/KoNk4lD2Zk/ko8Ptfyx9pfcCEk1+xfjJoMTQPSOjWioASPV46/Ha1+7qlzSXLpxw7qF3bd6QyofLdG9HPXxqxbc5yf8l8OlKa6PLm4PtzzxvwL0QYVG5G35Z81mVNfv9RVdlJbshdrVFdRDnFEc5I91rH5f/6x8+iGMvxU+3PDughXQ7wVAYFa13lAdKkdGBE+2vPq47fS2T55vKFrHxbpcperhBqq6IquyqcruRCpcN0M3bj1kfByP3gkxvSLRGX/cMS/z9VgLyQ5sDLTxT9yw3IvV2GRvNPHxPBuECyEZ8UucSDuZCSSKpiF1yjwnWCTlwxbiyDo3243CoR+1eO5joPA/fKDTdjZyH0U9DuVojNhp2usSuGI/rfXe7nBpuiyycVmsNeOIFjtq24ONWej4gRR2I1z2otVENw/vYbc4rsgGJj7IOj0s8jtEEUfYUSjW0m7aXwsKbsmWHSDP9wqz9dTaTflR0l57Ltnm+QoTbWiPDleNl95aXeJYoztwRSzwBLDalsr7dX7tRFofyWCqLS7Ao/q1puLot2ybIZ0qX0899qpuyhLqc6Acbuse4W8+pTUFuRY9pdVCG5HabqjxdPSzkdv7JuIyu2SdsixnRsi1n7HeJJV/3v/mwwqBVeIMCrvhlurr323eQ0fJg7j6v6KA/eWFLi2lb69Uoh6/SXlhI0VDT7ijxPeJj2R3bW6F8q8OorZt5dBUD/iD0rE1C0+I5EdnRNbRp6W5+8v3RfH66n75aBOwrJ7lFX7S9WPNH7PaleKA/enIxSY17e+7PVekXq+tnk8xxW/TC6D9tfbS3V91eG7M04G7S/sb5F+RBThblYqSiNx5C8iw48q/HjVx1c2rtloeirp8P2g2M3CJDkWg+zI8EAmNuZDB4PzrY/jdJcxOJv+fVo9WegQ+HKiaOApAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwlP8B5i7wCFGNujEAAAAASUVORK5CYII=" alt="RAKPAA" style="height:40px;width:40px;object-fit:contain;border-radius:6px;background:#fff;padding:3px;">
+      <div>
+        <div class="logo-name">Sales Dashboard</div>
+        <div class="logo-sub">RAKPAA & PUREHIVE</div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <div class="last-updated" id="last-updated">ยังไม่ได้โหลดข้อมูล</div>
+    <button class="btn-secondary" onclick="loadData()" style="height:32px;padding:0 12px;font-size:12px;">🔄 รีเฟรช</button>
+  </header>
+
+  <!-- ── Apps Script Config ── -->
+  <div style="background:var(--surface);border-bottom:1px solid var(--border);padding:10px 16px;">
+    <div class="config-box" style="margin-bottom:0">
+      <label>⚙️ Google Apps Script URL:</label>
+      <input type="url" class="config-url-input" id="gas-url-input" placeholder="https://script.google.com/macros/s/…/exec">
+      <button class="btn-primary" id="save-url-btn">บันทึก &amp; โหลด</button>
+      <span style="font-size:12px;color:var(--text-muted)">URL จะถูกเก็บในเบราว์เซอร์ของคุณ</span>
+    </div>
+  </div>
+
+  <!-- ── Navigation Tabs ── -->
+  <nav class="nav-tabs">
+    <div class="nav-tab active" data-tab="dashboard" onclick="switchTab('dashboard')">📊 Dashboard</div>
+    <div class="nav-tab" data-tab="master" onclick="switchTab('master')">📋 Master Data</div>
+    <div class="nav-tab" data-tab="upload" onclick="switchTab('upload')">⬆️ Upload Report</div>
+    <div class="nav-tab" data-tab="mapping" onclick="switchTab('mapping')">🗺️ Channel Mapping</div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════
+       PAGE: Dashboard
+  ══════════════════════════════════════════════════ -->
+  <main class="page active" id="page-dashboard">
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+
+      <div class="filter-group">
+        <div class="filter-label">ช่วงวันที่</div>
+        <input type="text" id="date-range-input" class="filter-input date-range" placeholder="เลือกวันที่…" readonly>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">สินค้า</div>
+        <div class="ms-wrapper" id="ms-products">
+          <div class="ms-toggle">สินค้า </div>
+          <div class="ms-dropdown">
+            <input class="ms-search" type="text" placeholder="ค้นหาสินค้า…">
+            <div class="ms-select-all">เลือกทั้งหมด / ยกเลิก</div>
+            <div class="ms-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">หมวดสินค้า</div>
+        <div class="ms-wrapper" id="ms-categories">
+          <div class="ms-toggle">หมวดสินค้า </div>
+          <div class="ms-dropdown">
+            <input class="ms-search" type="text" placeholder="ค้นหาหมวด…">
+            <div class="ms-select-all">เลือกทั้งหมด / ยกเลิก</div>
+            <div class="ms-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">คลังสินค้า</div>
+        <div class="ms-wrapper" id="ms-warehouses">
+          <div class="ms-toggle">คลัง </div>
+          <div class="ms-dropdown">
+            <div class="ms-select-all">เลือกทั้งหมด / ยกเลิก</div>
+            <div class="ms-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">ลูกค้า</div>
+        <div class="ms-wrapper" id="ms-customers">
+          <div class="ms-toggle">ลูกค้า </div>
+          <div class="ms-dropdown">
+            <input class="ms-search" type="text" placeholder="ค้นหาลูกค้า…">
+            <div class="ms-select-all">เลือกทั้งหมด / ยกเลิก</div>
+            <div class="ms-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">สถานะ</div>
+        <div class="ms-wrapper" id="ms-statuses">
+          <div class="ms-toggle">สถานะ </div>
+          <div class="ms-dropdown">
+            <div class="ms-select-all">เลือกทั้งหมด / ยกเลิก</div>
+            <div class="ms-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">Channel</div>
+        <div class="ms-wrapper" id="ms-channels">
+          <div class="ms-toggle">Channel </div>
+          <div class="ms-dropdown">
+            <div class="ms-select-all">เลือกทั้งหมด / ยกเลิก</div>
+            <div class="ms-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-reset" id="reset-filters-btn">✕ รีเซ็ต Filters</button>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid" id="kpi-grid">
+      <div class="state-box" style="grid-column:1/-1">
+        <div class="state-icon">📊</div>
+        <div class="state-title">ยังไม่มีข้อมูล</div>
+        <div class="state-sub">ใส่ Apps Script URL แล้วกด "บันทึก &amp; โหลด" หรืออัปโหลด report ก่อน</div>
+      </div>
+    </div>
+
+    <!-- Dashboard Grid -->
+    <div class="dashboard-grid">
+
+      <!-- Status Overview -->
+      <div class="card">
+        <div class="card-title">Status Overview</div>
+        <div class="table-scroll">
+          <table class="status-table">
+            <thead><tr>
+              <th>สถานะ</th>
+              <th style="text-align:right">จำนวนรายการ</th>
+              <th style="text-align:right">Net Sales</th>
+            </tr></thead>
+            <tbody id="status-tbody">
+              <tr><td colspan="3"><div class="state-box"><div class="state-icon">📋</div><div>ไม่มีข้อมูล</div></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Channel Performance -->
+      <div class="card">
+        <div class="card-title">Channel Performance</div>
+        <div id="unmapped-warning" style="display:none;padding:8px 12px;background:#FEF9C3;border-radius:6px;font-size:12px;color:#92400E;margin-bottom:12px;cursor:pointer" onclick="switchTab('mapping')"></div>
+        <div id="channel-chart-wrap">
+          <div class="chart-container" style="height:240px"><canvas id="channel-chart"></canvas></div>
+          <div id="channel-legend" style="margin-top:12px"></div>
+        </div>
+      </div>
+
+      <!-- Products Performance (full width) -->
+      <div class="card full-width">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+          <div class="card-title" style="margin-bottom:0">Products Performance</div>
+          <div class="top-n-select">
+            แสดงสูงสุด
+            <select id="top-n-select">
+              <option value="10">Top 10</option>
+              <option value="20">Top 20</option>
+              <option value="30">Top 30</option>
+            </select>
+            รายการ
+          </div>
+        </div>
+        <div class="two-col-grid">
+          <div class="chart-container" style="height:320px"><canvas id="product-chart"></canvas></div>
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead><tr>
+                <th style="width:32px">#</th>
+                <th>สินค้า</th>
+                <th class="num">จำนวน</th>
+                <th class="num">Net Sales</th>
+                <th class="num">Disc %</th>
+              </tr></thead>
+              <tbody id="product-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monthly Comparison (full width) -->
+      <div class="card full-width">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+          <div class="card-title" style="margin-bottom:0">Monthly Comparison</div>
+          <span style="font-size:12px;color:var(--text-muted)">สีเขียว = โต / สีแดง = ลด เทียบเดือนก่อนหน้า</span>
+        </div>
+        <div class="two-col-grid">
+          <div id="monthly-chart-container">
+            <div class="chart-container" style="height:280px"><canvas id="monthly-chart"></canvas></div>
+          </div>
+          <div class="table-scroll">
+            <table class="data-table" style="min-width:360px">
+              <thead><tr>
+                <th>เดือน</th>
+                <th style="text-align:right">Net Sales</th>
+                <th style="text-align:right">เดือนก่อน</th>
+                <th style="text-align:right">เปลี่ยนแปลง</th>
+              </tr></thead>
+              <tbody id="monthly-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sales Comparison (full width) -->
+      <div class="card full-width">
+        <div class="card-title" style="margin-bottom:16px">Sales Comparison</div>
+
+        <!-- Period Pickers -->
+        <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;padding:14px 16px;background:var(--bg);border-radius:var(--radius-sm);border:1px solid var(--border);margin-bottom:16px">
+          <div class="filter-group">
+            <div class="filter-label" style="color:var(--primary)">● ช่วงที่ 1 (เปรียบเทียบ A)</div>
+            <input type="text" id="cmp-a-input" class="filter-input date-range" placeholder="เลือกช่วง A…" readonly style="border-color:var(--primary);min-width:200px">
+          </div>
+          <div class="filter-group">
+            <div class="filter-label" style="color:#9BA8C0">● ช่วงที่ 2 (เปรียบเทียบ B)</div>
+            <input type="text" id="cmp-b-input" class="filter-input date-range" placeholder="เลือกช่วง B…" readonly style="min-width:200px">
+          </div>
+          <div style="display:flex;gap:8px;align-items:flex-end">
+            <div class="filter-group">
+              <div class="filter-label">Granularity</div>
+              <select id="cmp-gran" class="filter-select">
+                <option value="auto">อัตโนมัติ</option>
+                <option value="day">รายวัน</option>
+                <option value="week">รายสัปดาห์</option>
+                <option value="month">รายเดือน</option>
+              </select>
+            </div>
+            <button class="btn-reset" id="cmp-reset-btn" style="margin-bottom:1px">✕ รีเซ็ต</button>
+          </div>
+        </div>
+
+        <!-- Summary badges -->
+        <div class="comparison-badges" style="margin-bottom:12px">
+          <div class="comp-badge"><div class="comp-dot" style="background:#1B6B45"></div>ช่วง A: <strong id="cur-total">—</strong></div>
+          <div class="comp-badge"><div class="comp-dot" style="background:#9BA8C0"></div>ช่วง B: <strong id="prev-total">—</strong></div>
+          <div class="comp-badge" id="period-delta">— %</div>
+          <span id="cmp-period-labels" style="font-size:12px;color:var(--text-muted);margin-left:4px"></span>
+        </div>
+
+        <div id="comparison-container">
+          <div class="chart-container" style="height:280px"><canvas id="comparison-chart"></canvas></div>
+        </div>
+      </div>
+
+    </div><!-- /dashboard-grid -->
+  </main>
+
+  <!-- ══════════════════════════════════════════════════
+       PAGE: Master Data
+  ══════════════════════════════════════════════════ -->
+  <main class="page" id="page-master">
+    <div class="master-toolbar">
+      <div class="search-wrap">
+        <input type="text" class="master-search" id="master-search" placeholder="ค้นหาในทุกคอลัมน์…">
+      </div>
+      <button class="btn-secondary" onclick="loadData()">🔄 รีเฟรช</button>
+    </div>
+    <div class="card">
+      <div class="table-scroll">
+        <table class="data-table" style="min-width:900px">
+          <thead>
+            <tr>
+              <th class="sort-header" data-col="doc_no">เลขที่เอกสาร</th>
+              <th class="sort-header" data-col="date">วันที่ ↓</th>
+              <th class="sort-header" data-col="customer">ลูกค้า</th>
+              <th class="sort-header" data-col="product_name">สินค้า</th>
+              <th class="sort-header" data-col="category">หมวดหมู่</th>
+              <th class="sort-header num" data-col="qty">จำนวน</th>
+              <th class="sort-header num" data-col="net_amount">Net Sales</th>
+              <th class="sort-header" data-col="status">สถานะ</th>
+              <th class="sort-header" data-col="channel">Channel</th>
+              <th class="sort-header" data-col="warehouse">คลัง</th>
+            </tr>
+          </thead>
+          <tbody id="master-tbody">
+            <tr><td colspan="10"><div class="state-box"><div class="state-icon">📋</div><div>ยังไม่มีข้อมูล</div></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-info" id="master-info"></div>
+      <div class="pagination" id="master-pagination"></div>
+    </div>
+  </main>
+
+  <!-- ══════════════════════════════════════════════════
+       PAGE: Upload Report
+  ══════════════════════════════════════════════════ -->
+  <main class="page" id="page-upload">
+    <div style="max-width:600px;margin:0 auto">
+
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-title">อัปโหลด FlowAccount Report</div>
+        <div class="upload-area" id="upload-area">
+          <div class="upload-icon">📂</div>
+          <div class="upload-title">ลากไฟล์มาวาง หรือคลิกเพื่อเลือกไฟล์</div>
+          <div class="upload-sub">รองรับไฟล์ .xlsx, .xls | ขนาดสูงสุด 20 MB</div>
+          <label class="upload-file-label" onclick="event.stopPropagation()">
+            📁 เลือกไฟล์
+            <input type="file" id="file-input" accept=".xlsx,.xls" style="display:none">
+          </label>
+        </div>
+
+        <div class="upload-progress" id="upload-progress">
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+          </div>
+          <div class="progress-label" id="progress-label">กำลังประมวลผล…</div>
+        </div>
+
+        <div class="upload-result" id="upload-result"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">ข้อมูลที่ระบบจะดึงจากไฟล์</div>
+        <table style="width:100%;font-size:13px;border-collapse:collapse">
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:7px 8px;color:var(--text-muted)">คอลัมน์ใน FlowAccount</td>
+            <td style="padding:7px 8px;font-weight:500">→ ระบบแมปอัตโนมัติ</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:7px 8px;color:var(--text-muted)">เลขที่เอกสาร</td><td style="padding:7px 8px">Doc No (key หลัก)</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:7px 8px;color:var(--text-muted)">วันที่</td><td style="padding:7px 8px">Date (รองรับ พ.ศ. / ค.ศ.)</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:7px 8px;color:var(--text-muted)">ชื่อลูกค้า</td><td style="padding:7px 8px">Customer → Channel Mapping</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:7px 8px;color:var(--text-muted)">สินค้า / หมวดหมู่ / คลัง</td><td style="padding:7px 8px">Product / Category / Warehouse</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:7px 8px;color:var(--text-muted)">ส่วนลด / มูลค่ารวม</td><td style="padding:7px 8px">Discount / Net Amount</td></tr>
+          <tr><td style="padding:7px 8px;color:var(--text-muted)">สถานะ</td><td style="padding:7px 8px">Status (ยกเลิก/คืนเงิน → ติดลบ)</td></tr>
+        </table>
+        <p style="font-size:12px;color:var(--text-muted);margin-top:12px">
+          ⚡ ระบบป้องกันข้อมูลซ้ำด้วย เลขที่เอกสาร + รหัสสินค้า + วันที่ เป็น key หลัก<br>
+          📁 ไฟล์ต้นฉบับทุกไฟล์จะถูกเก็บไว้ใน Google Drive โฟลเดอร์ "Sales_Reports_Raw"
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ══════════════════════════════════════════════════
+       PAGE: Channel Mapping
+  ══════════════════════════════════════════════════ -->
+  <main class="page" id="page-mapping">
+    <div style="max-width:900px">
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+          <div>
+            <div class="card-title" style="margin-bottom:4px">Channel Mapping</div>
+            <p style="font-size:13px;color:var(--text-muted)">แมปชื่อลูกค้า → Channel เพื่อแบ่งกลุ่มยอดขาย เช่น LINE OA, Shopee, Walk-in</p>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn-secondary" id="add-mapping-btn">+ เพิ่มแถว</button>
+            <button class="btn-primary" id="save-mapping-btn">บันทึก Mapping</button>
+          </div>
+        </div>
+
+        <!-- Unmapped customers shortcut -->
+        <div id="unmapped-wrap" style="display:none">
+          <div class="unmapped-list">
+            <div class="unmapped-title">⚠️ ลูกค้าที่ยังไม่มี Channel (คลิกเพื่อเพิ่ม mapping)</div>
+            <div id="unmapped-items"></div>
+          </div>
+        </div>
+
+        <!-- Header row -->
+        <div class="mapping-header">
+          <span>ชื่อลูกค้า (ตรงตาม FlowAccount)</span>
+          <span>Channel</span>
+          <span></span>
+        </div>
+        <div id="mapping-list" style="max-height:500px;overflow-y:auto"></div>
+
+        <p style="font-size:12px;color:var(--text-muted);margin-top:16px">
+          💡 ลูกค้าที่ไม่พบใน mapping จะแสดงเป็น <strong>Unmapped</strong> ใน Dashboard<br>
+          การบันทึก mapping ใหม่จะอัปเดต Channel ในข้อมูลทั้งหมดโดยอัตโนมัติ
+        </p>
+      </div>
+    </div>
+  </main>
+
+</div><!-- /app-shell -->
+
+<script src="data.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>
