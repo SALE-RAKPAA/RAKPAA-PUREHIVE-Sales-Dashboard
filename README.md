@@ -1,7 +1,7 @@
 # RAKPAA & PUREHIVE Sales Dashboard
 
 แดชบอร์ดวิเคราะห์ยอดขายสำหรับแบรนด์ **RAKPAA** และ **PUREHIVE** สร้างด้วย HTML/CSS/JavaScript ล้วนๆ ไม่ต้องติดตั้งอะไรเพิ่มเติม
-
+https://github.com/SALE-RAKPAA/RAKPAA-PUREHIVE-Sales-Dashboard
 ---
 
 ## ✨ ฟีเจอร์หลัก
