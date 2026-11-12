@@ -1,0 +1,5 @@
+.claude/
+.agents/
+BaseLyne/
+*.tmp
+Thumbs.db
