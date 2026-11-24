@@ -910,8 +910,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const fp = flatpickr('#date-range-input', {
     mode: 'range', dateFormat: 'Y-m-d', locale: 'th',
     onChange([s, e]) {
-      FILTERS.dateFrom = s ? s.toISOString().slice(0,10) : '';
-      FILTERS.dateTo   = e ? e.toISOString().slice(0,10) : '';
+      const toLocal = d => d ? `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}` : '';
+      FILTERS.dateFrom = toLocal(s);
+      FILTERS.dateTo   = toLocal(e);
       applyFilters(); renderAll();
     }
   });
@@ -961,19 +962,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Comparison period pickers
   if ($('cmp-a-input')) {
+    const toLocal = d => d ? `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}` : '';
     flatpickr('#cmp-a-input', {
       mode: 'range', dateFormat: 'Y-m-d', locale: 'th',
       onChange([s, e]) {
-        CMP.aFrom = s ? s.toISOString().slice(0,10) : '';
-        CMP.aTo   = e ? e.toISOString().slice(0,10) : '';
+        CMP.aFrom = toLocal(s);
+        CMP.aTo   = toLocal(e);
         if (CMP.aFrom && CMP.aTo) renderSalesComparison();
       }
     });
     flatpickr('#cmp-b-input', {
       mode: 'range', dateFormat: 'Y-m-d', locale: 'th',
       onChange([s, e]) {
-        CMP.bFrom = s ? s.toISOString().slice(0,10) : '';
-        CMP.bTo   = e ? e.toISOString().slice(0,10) : '';
+        CMP.bFrom = toLocal(s);
+        CMP.bTo   = toLocal(e);
         if (CMP.bFrom && CMP.bTo) renderSalesComparison();
       }
     });
