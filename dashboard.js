@@ -73,7 +73,7 @@ async function loadData() {
     STATE.lastUpdated= '2026-11-12T00:00:00Z';
     applyFilters();
     renderAll();
-    $('last-updated').textContent = 'ข้อมูล: ม.ค.–พ.ย. 2569 (Rakpaa Honey)';
+    $('last-updated').textContent = window.LOCAL_DATA_INFO || 'ข้อมูล: ม.ค.–พ.ย. 2569 (Rakpaa Honey)';
     STATE.loading = false;
     return;
   }
